@@ -40,12 +40,12 @@ export default function FeedPage() {
   };
 
   return (
-    <div className="page-feed">
+    <div className="space-y-4">
       <NewPostForm onCreate={handleCreatePost} />
-      <section className="feed-list">
-        {loading && <p>Loading feed…</p>}
-        {error && <p className="form-error">{error}</p>}
-        {!loading && feed.length === 0 && <p>No posts yet. Start the conversation.</p>}
+      <section className="space-y-4">
+        {loading && <p className="text-center text-gray-500">Loading feed…</p>}
+        {error && <p className="text-red-500 text-center">{error}</p>}
+        {!loading && feed.length === 0 && <p className="text-center text-gray-500">No posts yet. Start the conversation.</p>}
         {feed.map((post) => (
           <PostCard key={post.id} post={post} onLike={handleLike} onComment={handleComment} />
         ))}

@@ -59,35 +59,39 @@ export default function FriendsPage() {
   };
 
   return (
-    <div className="friends-page">
-      <h2>Friends</h2>
-      {feedback && <p className="form-error">{feedback}</p>}
-      {loading && <p>Loading your friends…</p>}
-      {error && <p className="form-error">{error}</p>}
+    <div className="space-y-4">
+      <h2 className="text-2xl font-bold text-gray-900">Friends</h2>
+      {feedback && <p className="text-center text-red-500">{feedback}</p>}
+      {loading && <p className="text-center text-gray-500">Loading your friends…</p>}
+      {error && <p className="text-center text-red-500">{error}</p>}
 
-      <section className="settings-card">
-        <h3>Find friends</h3>
-        <form onSubmit={handleSearch} className="search-form">
+      <section className="bg-white border border-gray-300 rounded-lg p-6">
+        <h3 className="text-lg font-semibold text-gray-900 mb-4">Find Friends</h3>
+        <form onSubmit={handleSearch} className="space-y-3">
           <input
             type="text"
             placeholder="Search by name or username"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
-          <button type="submit" className="primary-button">
+          <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 font-semibold">
             Search
           </button>
         </form>
         {searchResults.length > 0 && (
-          <div className="search-results">
+          <div className="mt-4 space-y-3">
             {searchResults.map((user) => (
-              <div key={user.id} className="friend-card">
+              <div key={user.id} className="flex items-center justify-between bg-gray-50 p-3 rounded-lg border border-gray-200">
                 <div>
-                  <strong>{user.displayName || user.username}</strong>
-                  <span>{user.email}</span>
+                  <p className="font-semibold text-gray-900">{user.displayName || user.username}</p>
+                  <p className="text-sm text-gray-600">{user.email}</p>
                 </div>
-                <button className="primary-button" onClick={() => handleRequest(user.username)}>
-                  Add friend
+                <button
+                  className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+                  onClick={() => handleRequest(user.username)}
+                >
+                  Add
                 </button>
               </div>
             ))}
@@ -95,38 +99,48 @@ export default function FriendsPage() {
         )}
       </section>
 
-      <section className="settings-card">
-        <h3>Friend requests</h3>
+      <section className="bg-white border border-gray-300 rounded-lg p-6">
+        <h3 className="text-lg font-semibold text-gray-900 mb-4">Friend Requests</h3>
         {requests.length === 0 ? (
-          <p>No pending requests.</p>
+          <p className="text-gray-600">No pending requests.</p>
         ) : (
-          requests.map((request) => (
-            <div key={request.id} className="friend-card">
-              <div>
-                <strong>{request.sender.displayName || request.sender.username}</strong>
-                <span>{request.sender.email}</span>
+          <div className="space-y-3">
+            {requests.map((request) => (
+              <div key={request.id} className="flex items-center justify-between bg-gray-50 p-3 rounded-lg border border-gray-200">
+                <div>
+                  <p className="font-semibold text-gray-900">{request.sender.displayName || request.sender.username}</p>
+                  <p className="text-sm text-gray-600">{request.sender.email}</p>
+                </div>
+                <div className="flex space-x-2">
+                  <button
+                    onClick={() => handleResponse(request.id, true)}
+                    className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+                  >
+                    Accept
+                  </button>
+                  <button
+                    onClick={() => handleResponse(request.id, false)}
+                    className="bg-gray-300 text-gray-900 px-4 py-2 rounded-lg hover:bg-gray-400"
+                  >
+                    Reject
+                  </button>
+                </div>
               </div>
-              <div className="friend-actions">
-                <button onClick={() => handleResponse(request.id, true)} className="primary-button">
-                  Accept
-                </button>
-                <button onClick={() => handleResponse(request.id, false)} className="logout-button">
-                  Reject
-                </button>
-              </div>
-            </div>
-          ))
+            ))}
+          </div>
         )}
       </section>
 
-      <section className="friends-list">
-        <h3>Your friends</h3>
-        {friends.length === 0 && !loading ? <p>No friends yet. Search to connect.</p> : null}
-        <div className="friend-list">
+      <section className="bg-white border border-gray-300 rounded-lg p-6">
+        <h3 className="text-lg font-semibold text-gray-900 mb-4">Your Friends</h3>
+        {friends.length === 0 && !loading ? <p className="text-gray-600">No friends yet. Search to connect.</p> : null}
+        <div className="space-y-3">
           {friends.map((friend) => (
-            <div key={friend.id} className="friend-card">
-              <strong>{friend.displayName || friend.username}</strong>
-              <span>{friend.email}</span>
+            <div key={friend.id} className="flex items-center justify-between bg-gray-50 p-3 rounded-lg border border-gray-200">
+              <div>
+                <p className="font-semibold text-gray-900">{friend.displayName || friend.username}</p>
+                <p className="text-sm text-gray-600">{friend.email}</p>
+              </div>
             </div>
           ))}
         </div>

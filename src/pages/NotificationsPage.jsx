@@ -31,24 +31,38 @@ export default function NotificationsPage() {
   };
 
   return (
-    <div className="notifications-page">
-      <div className="page-header">
-        <h2>Notifications</h2>
-        <button className="primary-button" onClick={handleMarkAllRead}>
-          Mark all as read
+    <div className="space-y-4">
+      <div className="flex items-center justify-between">
+        <h2 className="text-2xl font-bold text-gray-900">Notifications</h2>
+        <button
+          className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 font-semibold"
+          onClick={handleMarkAllRead}
+        >
+          Mark All as Read
         </button>
       </div>
-      {loading && <p>Loading notifications…</p>}
-      {error && <p className="form-error">{error}</p>}
-      {notifications.length === 0 && !loading ? <p>No notifications yet.</p> : null}
-      <div className="notification-list">
+      {loading && <p className="text-center text-gray-500">Loading notifications…</p>}
+      {error && <p className="text-center text-red-500">{error}</p>}
+      {notifications.length === 0 && !loading ? <p className="text-center text-gray-500">No notifications yet.</p> : null}
+      <div className="space-y-3">
         {notifications.map((notification) => (
-          <div key={notification.id} className={`notification-card ${notification.read ? 'notification-read' : ''}`}>
-            <div>
-              <strong>{notification.title}</strong>
-              <p>{notification.message || notification.description}</p>
+          <div
+            key={notification.id}
+            className={`border rounded-lg p-4 ${
+              notification.read
+                ? 'bg-gray-50 border-gray-300'
+                : 'bg-blue-50 border-blue-300'
+            }`}
+          >
+            <div className="flex items-start justify-between">
+              <div>
+                <p className="font-semibold text-gray-900">{notification.title}</p>
+                <p className="text-sm text-gray-600 mt-1">{notification.message || notification.description}</p>
+              </div>
+              <small className="text-xs text-gray-500 ml-4">
+                {new Date(notification.createdAt).toLocaleString()}
+              </small>
             </div>
-            <small>{new Date(notification.createdAt).toLocaleString()}</small>
           </div>
         ))}
       </div>
