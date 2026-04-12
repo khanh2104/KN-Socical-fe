@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import { login, saveToken } from '../api/auth';
+import React, { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import { login, saveToken } from "../api/auth";
 
 export default function LoginPage() {
-  const [username, setUsername] = useState('defaultuser');
-  const [password, setPassword] = useState('defaultpass');
+  const [username, setUsername] = useState("defaultuser");
+  const [password, setPassword] = useState("defaultpass");
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
@@ -13,48 +13,66 @@ export default function LoginPage() {
     try {
       const data = await login({ username, password });
       saveToken(data.token);
-      navigate('/');
+      navigate("/");
     } catch (err) {
-      setError('Login failed. Please check your credentials.');
+      setError("Đăng nhập thất bại. Vui lòng kiểm tra lại thông tin.");
     }
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-      <div className="max-w-md w-full space-y-8">
-        <div className="text-center">
-          <h1 className="text-4xl font-bold text-blue-600 mb-2">facebook</h1>
-          <p className="text-gray-600">Connect with friends and the world around you.</p>
+    <div className="min-h-screen bg-[#f0f2f5]">
+      <div className="grid grid-cols-10 space-x-1">
+        {/* LEFT */}
+        <div className="col-span-7  flex items-center justify-between rounded-lg p-10 bg-white ">
+          {/* TEXT */}
+          <div className="max-w-md">
+            <h1 className="text-6xl font-bold leading-tight">
+              Khám phá <br />
+              những điều <span className="text-blue-500">bạn yêu thích.</span>
+            </h1>
+          </div>
+
+          {/* IMAGE */}
+          <div className="flex justify-center">
+            <img
+              src="https://static.xx.fbcdn.net/rsrc.php/y0/r/U45qBJmWVHU.webp"
+              alt="Facebook illustration"
+              className="w-full h-auto object-cover"
+            />
+          </div>
         </div>
-        <div className="bg-white p-8 rounded-lg shadow-md">
+
+        {/* RIGHT */}
+        <div className="col-span-3 flex items-center justify-center pl-10 rounded-lg p-10 bg-white ">
           <form onSubmit={handleSubmit} className="space-y-4">
-            <div>
-              <input
-                type="text"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                placeholder="Email or phone number"
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                required
-              />
+            <div className="w-full max-w-sm">
+              <h2 className="text-lg font-semibold mb-6 text-center">
+                Đăng nhập vào Facebook
+              </h2>
+
+              <div className="bg-white p-6 rounded-xl shadow-md">
+                <input
+                  className="w-full mb-3 p-3 border rounded-lg"
+                  placeholder="Email"
+                  type="text"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  required
+                />
+                <input
+                  className="w-full mb-3 p-3 border rounded-lg"
+                  placeholder="Mật khẩu"
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+
+                <button type="submit" className="w-full bg-blue-500 text-white py-3 rounded-lg font-semibold">
+                  Đăng nhập
+                </button>
+              </div>
             </div>
-            <div>
-              <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="Password"
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                required
-              />
-            </div>
-            {error && <p className="text-red-500 text-sm">{error}</p>}
-            <button
-              type="submit"
-              className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 font-semibold"
-            >
-              Log In
-            </button>
           </form>
           <div className="mt-4 text-center">
             <a href="#" className="text-blue-600 text-sm hover:underline">Forgot password?</a>
