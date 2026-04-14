@@ -1,4 +1,5 @@
 import api from './http';
+import { handleApiError } from './errorHandler';
 
 const DEFAULT_USER = {
   username: 'defaultuser',
@@ -11,19 +12,17 @@ export async function login(credentials) {
     const response = await api.post('/auth/login', credentials);
     return response.data;
   } catch (error) {
-    if (
-      credentials.username === DEFAULT_USER.username &&
-      credentials.password === DEFAULT_USER.password
-    ) {
-      return { token: DEFAULT_USER.token };
-    }
-    throw error;
+    handleApiError(error, 'login');
   }
 }
 
 export async function register(payload) {
-  const response = await api.post('/auth/register', payload);
-  return response.data;
+  try {
+    const response = await api.post('/auth/register', payload);
+    return response.data;
+  } catch (error) {
+    handleApiError(error, 'register');
+  }
 }
 
 export function saveToken(token) {

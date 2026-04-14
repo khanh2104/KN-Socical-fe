@@ -19,7 +19,7 @@ function App() {
       <Route path="/" element={<PrivateRoute />}>
         <Route element={<Layout />}>
           <Route index element={<FeedPage />} />
-          <Route path="profile/:username" element={<ProfilePage />} />
+          <Route path="profile/:email" element={<ProfilePage />} />
           <Route path="friends" element={<FriendsPage />} />
           <Route path="notifications" element={<NotificationsPage />} />
           <Route path="messages" element={<MessagesPage />} />

@@ -1,11 +1,20 @@
 import api from './http';
+import { handleApiError } from './errorHandler';
 
 export async function fetchNotifications() {
-  const response = await api.get('/notifications');
-  return response.data;
+  try {
+    const response = await api.get('/notifications');
+    return response.data;
+  } catch (error) {
+    handleApiError(error, 'fetchNotifications');
+  }
 }
 
 export async function markAllRead() {
-  const response = await api.put('/notifications/read-all');
-  return response.data;
+  try {
+    const response = await api.put('/notifications/read-all');
+    return response.data;
+  } catch (error) {
+    handleApiError(error, 'markAllRead');
+  }
 }
